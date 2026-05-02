@@ -8,6 +8,10 @@ from typing import Optional
 
 app = FastAPI(title="US Stock Screener API")
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
