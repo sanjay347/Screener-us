@@ -14,9 +14,16 @@ def health():
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://stock-market-research-platform.web.app",
+        "https://stock-market-research-platform.firebaseapp.com",
+        "http://localhost:3000",
+        "http://localhost:8000",
+        "null",  # file:// origin
+    ],
+    allow_origin_regex=r"https://.*\.web\.app",
     allow_credentials=False,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
@@ -399,7 +406,3 @@ def get_options(ticker: str):
         return {"expiration_dates": list(dates) if dates else []}
     except Exception as e:
         return {"expiration_dates": [], "error": str(e)}
-
-@app.get("/health")
-def health():
-    return {"status": "ok"}
